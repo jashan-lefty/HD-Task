@@ -34,6 +34,14 @@ pipeline {
         stage('Deploy to Netlify') {
             steps {
                 script {
+                    // Check Node and npm versions to ensure proper setup
+                    bat 'node -v'
+                    bat 'npm -v'
+
+                    // Install netlify-cli globally if not already installed
+                    bat 'npm install -g netlify-cli'
+
+                    // Deploy the app to Netlify
                     bat """
                     npx netlify deploy --dir=./build --prod --auth=${NETLIFY_AUTH_TOKEN} --site=${NETLIFY_SITE_ID}
                     """
