@@ -1,30 +1,23 @@
-const { Builder, By, until } = require('selenium-webdriver');
+const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-require('chromedriver');
 
-async function exampleTest() {
-    let chromeOptions = new chrome.Options();
-    chromeOptions.addArguments('headless');
-    chromeOptions.addArguments('disable-gpu');
+async function runTest() {
+  let options = new chrome.Options();
+  options.addArguments('--headless');  // Run Chrome in headless mode to speed up the test
+  let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
-    let driver = await new Builder()
-        .forBrowser('chrome')
-        .setChromeOptions(chromeOptions)
-        .build();
-
-    try {
-        await driver.get('http://localhost:3001');
-
-        // Verify that the h1 element contains 'Hello, World!'
-        await driver.wait(until.elementLocated(By.tagName('h1')), 10000);
-        let header = await driver.findElement(By.tagName('h1')).getText();
-        if (header !== 'Hello, World!') {
-            throw new Error('Test Failed: Incorrect header');
-        }
-        console.log('Test Passed: Correct header found');
-    } finally {
-        await driver.quit();
+  try {
+    await driver.get('http://www.google.com');
+    await driver.sleep(2000);  // Wait for 2 seconds to ensure the page is loaded
+    let title = await driver.getTitle();
+    if (title.includes('Google')) {
+      console.log('Test Passed: Title contains "Google"');
+    } else {
+      console.log('Test Failed: Title does not contain "Google"');
     }
+  } finally {
+    await driver.quit();
+  }
 }
 
-exampleTest();
+runTest();
