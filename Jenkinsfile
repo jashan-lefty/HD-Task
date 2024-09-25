@@ -21,6 +21,23 @@ pipeline {
             }
         }
 
+stage('Build Image') {
+            steps {
+                script {
+                    bat 'docker build -t jashan:1.0 .'
+                }
+            }
+        }
+
+        stage('Deploy to Test Environment') {
+            steps {
+                script {
+                    // Deploy using Docker Compose to a staging environment
+                    bat 'docker-compose down || true'  // Stop any previous instance
+                    bat 'docker-compose up -d'         // Start the container in detached mode
+                }
+            }
+        }
         
 stage('Test') {
             steps {
