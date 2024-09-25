@@ -21,6 +21,8 @@ pipeline {
             steps {
                 script {
                     bat 'npm install'
+                    // Run Selenium tests using WebDriverIO or Selenium
+                    bat 'node test.js'
                 }
             }
         }
