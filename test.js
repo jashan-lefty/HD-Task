@@ -1,19 +1,30 @@
-const {Builder, By, Key, until} = require('selenium-webdriver');
+const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
+require('chromedriver');
 
-async function runTest() {
-  let options = new chrome.Options();
-  options.addArguments('--headless');  // Run Chrome in headless mode (no UI)
-  let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+async function exampleTest() {
+    let chromeOptions = new chrome.Options();
+    chromeOptions.addArguments('headless');
+    chromeOptions.addArguments('disable-gpu');
 
-  try {
-    await driver.get('http://www.google.com');
-    let searchBox = await driver.findElement(By.name('q'));
-    await searchBox.sendKeys('Selenium', Key.RETURN);
-    await driver.wait(until.titleContains('Selenium'), 1000);
-  } finally {
-    await driver.quit();
-  }
+    let driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(chromeOptions)
+        .build();
+
+    try {
+        await driver.get('http://localhost:3001');
+
+        // Verify that the h1 element contains 'Hello, World!'
+        await driver.wait(until.elementLocated(By.tagName('h1')), 10000);
+        let header = await driver.findElement(By.tagName('h1')).getText();
+        if (header !== 'Hello, World!') {
+            throw new Error('Test Failed: Incorrect header');
+        }
+        console.log('Test Passed: Correct header found');
+    } finally {
+        await driver.quit();
+    }
 }
 
-runTest();
+exampleTest();
