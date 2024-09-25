@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'your-dockerhub-username/react-app'
+        DOCKER_IMAGE = 'your-dockerhub-jashan992/react-app'
         TEST_ENV = 'test-env'
         PROD_ENV = 'prod-env'
     }
