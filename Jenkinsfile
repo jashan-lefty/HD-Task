@@ -21,7 +21,7 @@ pipeline {
             }
         }
 
-stage('Build Image') {
+        stage('Build Image') {
             steps {
                 script {
                     bat 'docker build -t jashan:1.0 .'
@@ -39,7 +39,7 @@ stage('Build Image') {
             }
         }
         
-stage('Test') {
+        stage('Test') {
             steps {
                 script {
                     bat 'npm install'
@@ -74,20 +74,10 @@ stage('Test') {
             }
         }
 
-        
-
         stage('Build') {
             steps {
                 script {
                     bat 'npm run build'
-                }
-            }
-        }
-
-        stage('Build Image') {
-            steps {
-                script {
-                    bat 'docker build -t jashan:1.0 .'
                 }
             }
         }
