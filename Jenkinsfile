@@ -21,6 +21,14 @@ pipeline {
             }
         }
 
+        stage('Code Quality Analysis') {
+    steps {
+        script {
+            // Use PowerShell or cmd for Windows
+            bat 'docker run --rm -v %cd%:/code codeclimate/codeclimate analyze'
+        }
+    }
+}
         stage('Test') {
             steps {
                 script {
@@ -49,14 +57,7 @@ pipeline {
             }
         }
 
-        stage('Code Quality Analysis') {
-    steps {
-        script {
-            // Use PowerShell or cmd for Windows
-            bat 'docker run --rm -v %cd%:/code codeclimate/codeclimate analyze'
-        }
-    }
-}
+        
 
         stage('Build') {
             steps {
