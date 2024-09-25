@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        NETLIFY_SITE_ID = 'nfp_q4LYonGisRwY3U6d9S77Z6RZLeufaHqg3dcf'
-        NETLIFY_AUTH_TOKEN = '4337dd51-b18c-4d6f-afb5-53199725baea'
+        NETLIFY_SITE_ID = '4337dd51-b18c-4d6f-afb5-53199725baea'
+        NETLIFY_AUTH_TOKEN = 'nfp_R6xdniGX7cn7nP1SYcUCpkmvtmCkXyWubd1e'
     }
 
     stages {
