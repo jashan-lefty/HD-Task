@@ -22,13 +22,19 @@ pipeline {
         }
 
         
-
-        stage('Test') {
+stage('Test') {
             steps {
                 script {
                     bat 'npm install'
-                    // Run Selenium tests using WebDriverIO or Selenium
-                    bat 'node test.js'
+
+                    // Start the application in a new terminal
+                    bat 'start cmd /c "npm start"'
+
+                    // Run Selenium tests in a separate terminal
+                    bat 'start cmd /c "node test.js"'
+
+                    // Wait for a few seconds using sleep
+                    sleep(time: 10, unit: 'SECONDS')
                 }
             }
         }
