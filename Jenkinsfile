@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        DIRECTORY_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Task_6.2HD'
+    }
 
     stages {
         stage('Declarative: Checkout SCM') {
@@ -12,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    git url: 'https://github.com/jashan-lefty/HD-Task.git', branch: 'main'
+                    git url: 'https://github.com/CodeSnake-wq/SIT223_6.2hd.git', branch: 'main'
                 }
             }
         }
@@ -36,7 +39,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    bat 'docker build -t jashan:1.0 .'
+                    bat 'docker build -t aakash:1.0 .'
                 }
             }
         }
@@ -45,6 +48,6 @@ pipeline {
     post {
         always {
             echo 'Pipeline completed.'
-        }
-    }
+        }
+    }
 }
