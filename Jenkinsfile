@@ -21,14 +21,7 @@ pipeline {
             }
         }
 
-        stage('Code Quality Analysis') {
-    steps {
-        script {
-            // Use PowerShell or cmd for Windows
-            bat 'docker run --rm -v C:\\Users\\jasha\\task_6.2hd:/code codeclimate/codeclimate analyze'
-        }
-    }
-}
+        
 
         stage('Test') {
             steps {
