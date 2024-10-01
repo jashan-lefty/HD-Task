@@ -2,8 +2,10 @@ pipeline {
     agent any
 
     environment {
+        DOCKER_IMAGE = 'jashan'
         NETLIFY_SITE_ID = '4337dd51-b18c-4d6f-afb5-53199725baea'
         NETLIFY_AUTH_TOKEN = 'nfp_R6xdniGX7cn7nP1SYcUCpkmvtmCkXyWubd1e'
+        DATADOG_API_KEY = credentials('d3826c2a01d9487f409ccb4f786b109a')
     }
 
     stages {
@@ -21,6 +23,14 @@ pipeline {
             }
         }
 
+        stage('Build') {
+            steps {
+                script {
+                    bat 'npm run build'
+                }
+            }
+        }
+        
         stage('Build Image') {
             steps {
                 script {
@@ -74,13 +84,22 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Monitor with Datadog') {
             steps {
                 script {
-                    bat 'npm run build'
+                    sh """
+                    echo 'Sending data to Datadog...'
+                    curl -X POST -H 'Content-type: application/json' -d '{
+                        "title": "Deployment completed for ${DOCKER_IMAGE}",
+                        "text": "Deployment done at \$(date)",
+                        "priority": "normal",
+                        "tags": ["environment:production", "project:jenkinshd"],
+                        "alert_type": "info"
+                    }' 'https://api.datadoghq.com/api/v1/events?api_key=${DATADOG_API_KEY}'
+                    """
                 }
+
             }
-        }
     }
 
     post {
