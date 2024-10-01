@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build Image') {
             steps {
                 script {
@@ -48,7 +48,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Test') {
             steps {
                 script {
@@ -98,8 +98,8 @@ pipeline {
                     }' 'https://api.datadoghq.com/api/v1/events?api_key=${DATADOG_API_KEY}'
                     """
                 }
-
             }
+        }
     }
 
     post {
